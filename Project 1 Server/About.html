@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Raj Surani</title>
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg-main: #020617;
+      --bg-card: #020617cc;
+      --accent: #6366f1;
+      --accent-soft: #6366f11a;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2933;
+      --chip-bg: #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1f2937, #020617 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header / Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: #020617d9;
+      border-bottom: 1px solid #111827;
+      padding: 14px 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 20% 0, #f97316, #a855f7 60%, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #f9fafb;
+      box-shadow: 0 0 20px #6366f14d;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-text span:first-child {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .brand-text span:last-child {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-left: 20px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: 0.25s ease;
+    }
+
+    nav a:hover {
+      color: #f9fafb;
+      border-color: #1f2937;
+      background: #020617;
+    }
+
+    nav a.active {
+      color: #f9fafb;
+      background: #111827;
+      border-color: #1f2937;
+    }
+
+    /* Main layout */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px 60px;
+    }
+
+    .about-wrapper {
+      width: 100%;
+      max-width: 1050px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 28px;
+      background: linear-gradient(135deg, #020617f2, #020617e0);
+      border-radius: 28px;
+      padding: 28px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 22px 70px rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(18px);
+    }
+
+    /* Left column: profile */
+    .profile-card {
+      border-radius: 22px;
+      padding: 22px 20px;
+      background: radial-gradient(circle at 0 0, #111827, #020617 60%);
+      border: 1px solid #111827;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, #6366f11f, transparent 60%);
+      pointer-events: none;
+    }
+
+    .avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 26px;
+      background: conic-gradient(from 180deg, #22c55e, #6366f1, #ec4899, #22c55e);
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: #e5e7eb;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .name-role h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .name-role span {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      opacity: 0.9;
+    }
+
+    .tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--chip-bg);
+      border: 1px solid #1f2937;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-box {
+      flex: 1;
+      padding: 10px 10px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #020617, #020617);
+      border: 1px solid #111827;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Right column: about text */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid #1d2341;
+      color: #c7d2fe;
+    }
+
+    .about-text p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #d1d5db;
+      margin-bottom: 12px;
+    }
+
+    .about-text strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .location-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .location-tag {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px dashed #374151;
+    }
+
+    .cta-row {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      border-color: #4f46e5;
+      color: #f9fafb;
+      box-shadow: 0 14px 35px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(79, 70, 229, 0.55);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: #1f2937;
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: #4b5563;
+      color: #e5e7eb;
+      background: #020617;
+    }
+
+    /* Footer */
+    footer {
+      padding: 14px 5vw 18px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid #020617;
+      background: #020617;
+    }
+
+    /* Responsive */
+    @media (max-width: 880px) {
+      .about-wrapper {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 22px;
+        border-radius: 24px;
+      }
+
+      main {
+        padding-top: 26px;
+      }
+
+      header {
+        padding-inline: 16px;
+      }
+
+      nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-card {
+        padding: 18px 16px;
+      }
+
+      .section-title {
+        font-size: 22px;
+      }
+
+      .avatar {
+        width: 72px;
+        height: 72px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-logo">RS</div>
+      <div class="brand-text">
+        <span>Mr. Surani</span>
+        <span>About</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about" class="active">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="about-wrapper">
+      <!-- Left: Profile Summary -->
+      <aside class="profile-card">
+        <div class="profile-header">
+          <div class="avatar">
+            <div class="avatar-inner">R</div>
+          </div>
+          <div class="name-role">
+            <h1>Raj Surani</h1>
+            <span>Batman • Hacker • Builder</span>
+          </div>
+        </div>
+
+        <p class="tagline">
+          Part-time <span class="highlight">hacker</span>, full-time
+          <span class="highlight">problem solver</span>. I like clean, modern and
+          fast web experiences—with a taste of the dark side. 🦇
+        </p>
+
+        <div class="chips">
+          <div class="chip">
+            <span class="chip-dot"></span> Dark-Web Curious
+          </div>
+          <div class="chip">
+            <span class="chip-dot"></span> Smart Work Mindset
+          </div>
+          <div class="chip">
+            <span class="chip-dot"></span> Always Learning
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-box">
+            <div class="stat-label">Current Focus</div>
+            <div class="stat-value">Web Hacking & Automation</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Goal</div>
+            <div class="stat-value">Build Dark-Web Empire 💰</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right: About Content -->
+      <article class="content">
+        <div>
+          <div class="section-label">Profile</div>
+          <h2 class="section-title">About Me</h2>
+          <p class="section-subtitle">
+            A blend of Batman vibes, hacker mindset, and ambitious dreams.
+          </p>
+        </div>
+
+        <div class="pill-row">
+          <span class="pill">Student at “Google AI”</span>
+          <span class="pill">Running my own company</span>
+          <span class="pill">Web hacking & dark-web</span>
+        </div>
+
+        <div class="about-text">
+          <p>
+            Hello! My name is <strong>Raj Surani</strong>. I like to call myself
+            a <strong>organics.</strong></br> type personality: silent, focused and
+            always planning the next move. I’m a
+            <strong>part-time hacker</strong> who loves clean, modern and fast
+            web hacking projects.
+          </p>
+
+          <p>
+            I am currently studying at <strong>Google AI</strong> and at the
+            same time building my <strong>own company</strong>. My journey
+            started from <strong>Yogichowk, Surat</strong>, and I’m using every
+            day to level up my skills, mindset and network.
+          </p>
+
+          <div class="location-row">
+            <span class="location-tag">📍 Yogichowk, Surat</span>
+            <span class="location-tag">🌐 Building a Hacking future</span>
+          </div>
+
+          <p>
+            My long-term goal is simple:
+            <span class="highlight">become a billionaire</span> through
+            powerful web projects and dark-web opportunities. I believe in
+            <strong>smart work</strong>, <strong>creativity</strong> and
+            <strong>continuous learning</strong> more than anything else.
+          </p>
+
+          <p>
+            I’m always exploring new tools, technologies and ideas that push me
+            out of my comfort zone and closer to my dreams. This is just the
+            beginning of my <strong>hacking journey</strong> on the
+            dark-web—and I’m all in.
+          </p>
+        </div>
+
+        <div class="cta-row">
+          <button class="btn-primary">View Projects</button>
+          <button class="btn-ghost">Let’s Collaborate</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Raj Surani. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Raj Surani | Cyber security expert</title>
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-card: #0b1120;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.2);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2937;
+      --radius-xl: 18px;
+      --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1d283a 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(2, 6, 23, 0.92), rgba(2, 6, 23, 0.55));
+      border-bottom: 1px solid rgba(55, 65, 81, 0.55);
+    }
+
+    .nav-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      background: radial-gradient(circle at 30% 0%, #1f2937 0, #020617 45%);
+      box-shadow: 0 0 16px rgba(37, 99, 235, 0.4);
+    }
+
+    .logo-text-main {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 17px;
+    }
+
+    .logo-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav a {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+      border-bottom-color: var(--accent);
+    }
+
+    .nav-cta {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      font-size: 13px;
+      background: rgba(15, 23, 42, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .nav-cta span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .nav-cta strong {
+      font-size: 13px;
+    }
+
+    .nav-cta:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 18px rgba(37, 99, 235, 0.4);
+    }
+
+    /* MAIN LAYOUT */
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 18px 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 26px;
+    }
+
+    @media (max-width: 840px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* HERO / LEFT COLUMN */
+    .hero-card {
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 55%),
+                  var(--bg-card);
+      border-radius: 24px;
+      padding: 26px 24px 24px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-badge {
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .hero-title {
+      font-size: 32px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      color: #bfdbfe;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin-bottom: 22px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .btn-primary {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 999px;
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 18px 30px rgba(37, 99, 235, 0.45);
+      transition: 0.18s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 24px 40px rgba(37, 99, 235, 0.6);
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 9px 16px;
+      border: 1px solid var(--accent-soft);
+      background: rgba(15, 23, 42, 0.7);
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .hero-meta-row {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-item strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    /* RIGHT COLUMN: PROFILE / SKILLS */
+    .side-card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 24px;
+      padding: 20px 18px 18px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      border: 1px solid var(--accent-soft);
+      background: radial-gradient(circle at 30% 0%, #1f2937 0, #020617 45%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 22px;
+      box-shadow: 0 12px 25px rgba(15, 23, 42, 0.8);
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .profile-role {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .profile-location {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .side-section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin: 16px 0 8px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      background: rgba(15, 23, 42, 0.9);
+      white-space: nowrap;
+    }
+
+    .chip.highlight {
+      border-color: rgba(37, 99, 235, 0.7);
+      background: rgba(37, 99, 235, 0.16);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .pill {
+      font-size: 12px;
+      padding: 7px 9px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pill span.level {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .contact-footer {
+      border-top: 1px dashed rgba(55, 65, 81, 0.8);
+      margin-top: 14px;
+      padding-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .contact-footer a {
+      font-size: 11px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* SIMPLE SECTION ANCHORS */
+    section {
+      scroll-margin-top: 90px;
+    }
+
+    @media (max-width: 640px) {
+      .nav-container {
+        padding-inline: 14px;
+      }
+
+      .hero-title {
+        font-size: 26px;
+      }
+
+      .hero-subtitle {
+        font-size: 14px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <div class="logo-mark">R</div>
+        <div>
+          <div class="logo-text-main"> Raj Surani</div>
+          <div class="logo-text-sub">Cyber security expert</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#home">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});">
+          <div>
+            <span>Available for</span><br />
+            <strong>Freelance Work</strong>
+          </div>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="home">
+    <!-- LEFT: HERO -->
+    <section class="hero-card">
+      <div class="hero-badge-row">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Currently crafting modern web viruses
+        </div>
+        <div class="hero-tagline">
+          Clean code • Fast APIs • Scalable systems
+        </div>
+      </div>
+
+      <h1 class="hero-title">
+        Building <span>robust</span> and <span>scalable</span><br />
+        experiences for the web Hacking
+      </h1>
+
+      <p class="hero-subtitle">
+        Hi, I’m <strong>Raj Surani</strong>, a Cyber security expert who loves
+        turning complex problems into simple, elegant solutions using modern
+        JavaScript , clean APIs, and solid architecture.
+      </p>
+
+      <div class="hero-cta-row">
+        <button
+          class="btn-primary"
+          onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'});"
+        >
+          View Selected Projects →
+        </button>
+
+        <button
+          class="btn-ghost"
+          onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});"
+        >
+          Download CV
+        </button>
+      </div>
+
+      <div class="hero-meta-row">
+        <div class="hero-meta-item">
+          <strong>Specialised In</strong>
+           Web-Hacking, REST APIs, Auth, ip hacking
+        </div>
+        <div class="hero-meta-item">
+          <strong>Tech Focus</strong>
+          JavaScript • Python • Linux  • C++
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: PROFILE + STACK -->
+    <aside class="side-card">
+      <div class="profile-header">
+        <div class="avatar">RS</div>
+        <div>
+          <div class="profile-name">Raj Surani</div>
+          <div class="profile-role">Cyber security expert</div>
+          <div class="profile-location">Based in India · Open to Remote</div>
+        </div>
+      </div>
+
+      <div class="side-section-title">Core skills</div>
+      <div class="chip-row">
+        <span class="chip highlight">Web-Hacking</span>
+        <span class="chip">REST APIs</span>
+        <span class="chip">IP Hacking</span>
+      </div>
+
+      <div id="stack" class="side-section-title">Tech stack</div>
+      <div class="skills-grid">
+        <div class="pill">
+          <span>JavaScript</span>
+          <span class="level">Advanced</span>
+        </div>
+        <div class="pill">
+          <span>Python</span>
+          <span class="level">Advanced</span>
+        </div>
+        <div class="pill">
+          <span>java</span>
+          <span class="level">Advanced</span>
+        </div>
+        <div class="pill">
+          <span>Express</span>
+          <span class="level">Pro</span>
+        </div>
+        <!-- <div class="pill">
+          <span>c++ / SQL</span>
+          <span class="level">Pro</span>
+        </div>
+        <div class="pill">
+          <span>TypeScript</span>
+          <span class="level">Intermediate</span>
+        </div> -->
+      </div>
+
+      <div id="projects" class="side-section-title">Sample projects</div>
+      <div class="chip-row">
+        <span class="chip">Admin Dashboard · MERN</span>
+        <span class="chip">Realtime Chat hacking</span>
+        <span class="chip">Portfolio / Landing pages</span>
+      </div>
+
+      <div id="contact" class="contact-footer">
+        <div>
+          Let’s Hack something together.<br />
+          <strong>Have an idea? Let’s talk.</strong>
+        </div>
+        <div>
+          <a href="mailto:youremail@example.com">Email</a> ·
+          <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a> ·
+          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+</body>
+</html>

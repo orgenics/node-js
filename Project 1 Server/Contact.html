@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Raj Surani</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    :root {
+        --bg: #020617;
+        --card: rgba(15, 23, 42, 0.65);
+        --border: rgba(255, 255, 255, 0.12);
+        --accent: #2563eb;
+        --accent-glow: 0 0 30px rgba(37,99,235,0.6);
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --radius: 18px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Background Gradient */
+    body {
+        background: radial-gradient(circle at top, #1e293b 0, #020617 50%);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+        position: sticky;
+        top: 0;
+        padding: 18px 50px;
+        background: rgba(2,6,23,0.7);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(14px);
+        z-index: 20;
+    }
+
+    nav a {
+        margin-left: 25px;
+        font-size: 15px;
+        color: var(--muted);
+        text-decoration: none;
+        transition: .25s;
+    }
+
+    nav a:hover {
+        color: #fff;
+    }
+
+    /* Contact Box */
+    .contact-box {
+        width: 520px;
+        margin: 90px auto;
+        padding: 40px;
+        background: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(20px);
+        position: relative;
+        box-shadow: 0 0 80px rgba(0,0,0,0.6);
+        animation: floatUp .8s ease forwards;
+        opacity: 0;
+    }
+
+    /* Floating animation */
+    @keyframes floatUp {
+        from { transform: translateY(35px); opacity:0; }
+        to { transform: translateY(0); opacity:1; }
+    }
+
+    /* Decorative glowing circle behind */
+    .glow {
+        position: absolute;
+        top: -90px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(37,99,235,0.45), transparent 70%);
+        filter: blur(30px);
+        animation: pulse 2.8s infinite ease-in-out;
+        z-index: -1;
+    }
+
+    @keyframes pulse {
+        0% { transform: translateX(-50%) scale(0.85); }
+        50% { transform: translateX(-50%) scale(1.07); }
+        100% { transform: translateX(-50%) scale(0.85); }
+    }
+
+    .contact-box h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    label {
+        font-size: 14px;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 6px;
+        margin-top: 15px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 14px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.05);
+        color: white;
+        font-size: 15px;
+        outline: none;
+        transition: 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: var(--accent);
+        box-shadow: var(--accent-glow);
+    }
+
+    textarea { height: 130px; resize: none; }
+
+    /* Submit Button */
+    .btn {
+        width: 100%;
+        padding: 15px;
+        margin-top: 18px;
+        background: linear-gradient(135deg, #2563eb, #4f46e5);
+        border: none;
+        border-radius: var(--radius);
+        color: white;
+        font-size: 17px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: .25s ease;
+        box-shadow: 0 15px 40px rgba(37,99,235,0.45);
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 22px 60px rgba(37,99,235,0.65);
+    }
+
+    /* Social Icons */
+    .social {
+        text-align: center;
+        margin-top: 22px;
+    }
+
+    .social a {
+        margin: 0 10px;
+        font-size: 22px;
+        color: var(--muted);
+        transition: .25s;
+    }
+
+    .social a:hover {
+        color: #fff;
+        text-shadow: var(--accent-glow);
+    }
+
+    @media(max-width:550px) {
+        .contact-box { width: 90%; padding: 28px; }
+        header { padding: 18px 18px; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h2 style="font-weight:600;">Raj Surani</h2>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact" style="color:#fff;">Contact</a>
+    </nav>
+</header>
+
+<div class="contact-box">
+    <div class="glow"></div>
+    <h2>Let’s Build Something Amazing</h2>
+
+    <form>
+        <label><i class="fa-solid fa-user"></i> Your Name</label>
+        <input type="text" placeholder="Enter full name" required>
+
+        <label><i class="fa-solid fa-envelope"></i> Email</label>
+        <input type="email" placeholder="you@example.com" required>
+
+        <label><i class="fa-solid fa-phone"></i> Mobile Number</label>
+        <input type="tel" placeholder="+91 00000 00000" required>
+
+        <label><i class="fa-solid fa-message"></i> Your Message</label>
+        <textarea placeholder="Write your message..." required></textarea>
+
+        <button class="btn" type="submit">
+            Send Message <i class="fa-solid fa-paper-plane"></i>
+        </button>
+    </form>
+
+    <div class="social">
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+</div>
+
+</body>
+</html>
