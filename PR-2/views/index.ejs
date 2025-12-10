@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: #0d1117;
+        color: #fff;
+    }
+
+    /* Top Header */
+    header {
+        padding: 18px;
+        background: linear-gradient(135deg, #007bff, #00d4ff);
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #fff;
+    }
+
+    /* Layout */
+    .main {
+        display: flex;
+        padding: 30px;
+        gap: 30px;
+    }
+
+    /* Sidebar Form */
+    .sidebar {
+        width: 360px;
+        background: #161b22;
+        padding: 28px;
+        border-radius: 18px;
+        box-shadow: 0 0 15px rgba(0,255,255,0.15);
+    }
+
+    .sidebar h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 500;
+        display: block;
+        margin-top: 10px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        background: #22272e;
+        color: white;
+        font-size: 14px;
+    }
+
+    input:focus, select:focus {
+        box-shadow: 0 0 6px #00d4ff;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 20px;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #00c3ff, #006aff);
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 12px #00c3ff;
+    }
+
+    /* Table */
+    table {
+        width: 100%;
+        background: #161b22;
+        border-radius: 18px;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 18px rgba(0,255,255,0.12);
+    }
+
+    thead {
+        background: #00aaff57;
+    }
+
+    th, td {
+        padding: 14px 12px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    tbody tr:nth-child(even) {
+        background: #1d222b;
+    }
+
+    tbody tr:hover {
+        background: #29303b;
+        transition: 0.25s;
+    }
+
+    /* Priority Badges */
+    .badge-high {
+        background: #ff4d4d;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: white;
+    }
+    .badge-medium {
+        background: #ffa900;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: white;
+    }
+    .badge-low {
+        background: #22c55e;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: white;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: none;
+        font-size: 12px;
+        cursor: pointer;
+        margin: 0 4px;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+    .delete {
+        background: #ff4d4d;
+        color: #fff;
+    }
+
+    .edit {
+        background: #00c853;
+        color: #fff;
+    }
+
+    .delete:hover, .edit:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<body>
+
+<header>🚀 Smart Task Manager</header>
+
+<div class="main">
+
+    <!-- FORM -->
+    <div class="sidebar">
+        <h2>Add Task</h2>
+
+        <form action="add-task" method="post">
+            <label>ID</label>
+            <input type="text" name="id">
+
+            <label>Title</label>
+            <input type="text" name="Title">
+
+            <label>Description</label>
+            <input type="text" name="Description">
+
+            <label>Priority</label>
+            <select name="Priority">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+            </select>
+
+            <label>Due Date</label>
+            <input type="date" name="DueDate">
+
+            <button class="btn">Add Task</button>
+        </form>
+    </div>
+
+    <!-- TABLE -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% Task.forEach((task)=>{ %>
+            <tr>
+                <td><%= task.id %></td>
+                <td><%= task.Title %></td>
+                <td><%= task.Description %></td>
+
+                <td>
+                    <% if(task.Priority === "High"){ %>
+                        <span class="badge-high">High</span>
+                    <% } else if(task.Priority === "Medium"){ %>
+                        <span class="badge-medium">Medium</span>
+                    <% } else { %>
+                        <span class="badge-low">Low</span>
+                    <% } %>
+                </td>
+
+                <td><%= task.DueDate %></td>
+
+                <td>
+                    <a href="/delete-task/<%= task.id %>"><button class="action-btn delete">Delete</button></a>
+                    <a href="/edit-task/<%= task.id %>"><button class="action-btn edit">Edit</button></a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
