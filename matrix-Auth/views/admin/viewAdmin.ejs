@@ -1,0 +1,225 @@
+<%- include('../header') %>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* --- Page Background with subtle pattern --- */
+    .page-wrapper {
+        background-color: #f0f2f5;
+        background-image: radial-gradient(#dfe3eb 1px, transparent 1px);
+        background-size: 20px 20px;
+        min-height: 100vh;
+        padding-bottom: 50px;
+    }
+
+    /* --- Unique Search Bar (Glass Effect) --- */
+    .search-hero {
+        margin-bottom: 40px;
+        padding: 30px 0;
+        text-align: center;
+    }
+    
+    .glass-search {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 15px;
+        padding: 10px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        display: inline-block;
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .glass-search input {
+        border: none;
+        background: transparent;
+        padding: 10px 20px;
+        font-size: 1rem;
+        width: 100%;
+        outline: none;
+        color: #333;
+    }
+
+    /* --- ID Badge Card Style --- */
+    .id-card-col {
+        transition: all 0.3s ease;
+    }
+
+    .id-card {
+        display: flex;
+        flex-direction: row; /* Horizontal Layout */
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 5px solid #4e54c8; /* Accent Color Bar */
+        height: 100%;
+    }
+
+    .id-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Left Side: Image */
+    .id-card-img-box {
+        width: 130px;
+        min-width: 130px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .id-card-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px; /* Squircle shape */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Center: Details */
+    .id-card-body {
+        flex-grow: 1;
+        padding: 15px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .id-name {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 2px;
+    }
+
+    .id-role {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #4e54c8; /* Matches border */
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .id-email {
+        font-size: 0.85rem;
+        color: #718096;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Right Side: Actions (Vertical Bar) */
+    .id-actions {
+        width: 50px;
+        background: #f7fafc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-left: 1px solid #edf2f7;
+        gap: 10px;
+    }
+
+    .action-link {
+        color: #a0aec0;
+        transition: all 0.2s;
+        font-size: 1rem;
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+    .action-link:hover {
+        background: #fff;
+        transform: scale(1.1);
+    }
+
+    .text-view:hover { color: #38b2ac; }
+    .text-edit:hover { color: #3182ce; }
+    .text-delete:hover { color: #e53e3e; }
+
+</style>
+
+<div class="page-wrapper pt-4">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="search-hero">
+                    <h2 class="mb-3 fw-bold text-dark">Admin Directory</h2>
+                    <div class="glass-search">
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-magnifying-glass ms-3 text-muted"></i>
+                            <input type="text" id="blogSearch" placeholder="Find admin by name, role or tag...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-4"> <% admins.forEach((admi, i)=> { %>
+                <div class="col-lg-6 col-md-12 id-card-col blog-card" 
+                     data-title="<%= String(admi.title || '').toLowerCase() %>"
+                     data-author="<%= String(admi.author || '').toLowerCase() %>"
+                     data-category="<%= String(admi.category || '').toLowerCase() %>"
+                     data-tags="<%= (Array.isArray(admi.tags) ? admi.tags.join(' ') : String(admi.tags)).toLowerCase() %>">
+
+                    <div class="id-card">
+                        
+                        <div class="id-card-img-box">
+                            <img src="<%= admi.image %>" 
+                                 class="id-card-img" 
+                                 onerror="this.src='https://ui-avatars.com/api/?name=<%= admi.name %>&background=random'"
+                                 alt="Profile">
+                        </div>
+
+                        <div class="id-card-body">
+                            <div class="id-role"><%= admi.role %></div>
+                            <h5 class="id-name"><%= admi.name %></h5>
+                            
+                            <div class="mt-2">
+                                <span class="id-email">
+                                    <i class="fa-regular fa-envelope"></i>
+                                    <%= admi.email %>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="id-actions">
+                            
+                            <a href="/admin/single-view/<%= admi.id %>" class="action-link text-view" data-bs-toggle="tooltip" title="View Profile">
+                                <i class="fa-solid fa-id-card"></i>
+                            </a>
+
+                            <a href="/admin/edit-admin/<%= admi.id %>" class="action-link text-edit" data-bs-toggle="tooltip" title="Edit Data">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+
+                            <a href="/admin/delete-admin/<%= admi.id %>" 
+                               class="action-link text-delete" 
+                               title="Delete"
+                               onclick="return confirm('Remove this admin permanently?')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+            <% }) %>
+
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>

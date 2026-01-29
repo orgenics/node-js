@@ -1,0 +1,221 @@
+<%- include('../header') %>
+
+<style>
+    .edit-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        background: #fff;
+    }
+
+    .edit-header {
+        background: linear-gradient(to right, #7460ee, #5c4ac7);
+        padding: 20px 30px;
+        border-radius: 12px 12px 0 0;
+        color: white;
+    }
+
+    .edit-header h4 {
+        margin: 0;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .form-section {
+        padding: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        padding: 10px 15px;
+        background-color: #fcfcfc;
+    }
+
+    .form-control:focus {
+        border-color: #7460ee;
+        background-color: #fff;
+        box-shadow: 0 0 0 3px rgba(116, 96, 238, 0.1);
+    }
+
+    .current-image-preview {
+        border: 3px solid #eee;
+        border-radius: 8px;
+        padding: 5px;
+        background: #fff;
+        display: inline-block;
+    }
+
+    .current-image-preview img {
+        max-width: 100%;
+        max-height: 150px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .preview-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #888;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .category-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .category-group input {
+        display: none;
+    }
+
+    .category-group label {
+        padding: 8px 20px;
+        border-radius: 50px;
+        background: #f1f2f3;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 500;
+    }
+
+    .category-group input:checked + label {
+        background: #7460ee;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(116, 96, 238, 0.3);
+    }
+
+    .btn-update {
+        background: #7460ee;
+        border: none;
+        padding: 12px 50px;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .btn-update:hover {
+        background: #6352ce;
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="page-wrapper" style="background-color:#edf1f5;">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <form action="/blog/update-blog/<%= blog._id %>" method="post" enctype="multipart/form-data">
+                    <div class="card edit-card">
+
+                        <div class="edit-header d-flex justify-content-between align-items-center">
+                            <h4><i class="mdi mdi-pencil-box"></i> Edit Blog</h4>
+                            <span class="badge badge-light text-primary">
+                                ID: <%= blog._id %>
+                            </span>
+                        </div>
+
+                        <div class="card-body form-section">
+                            <div class="row">
+
+                                <!-- LEFT SIDE -->
+                                <div class="col-md-7 border-right pr-4">
+
+                                    <div class="form-group mb-4">
+                                        <label class="form-label">Blog Title</label>
+                                        <input type="text" name="title" class="form-control"
+                                               value="<%= blog.title %>" required>
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <label class="form-label">Description</label>
+                                        <textarea name="description" class="form-control" rows="4"><%= blog.description %></textarea>
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <label class="form-label">Category</label>
+                                        <div class="category-group">
+                                            <input type="radio" id="tech" name="category" value="Technology"
+                                                <%= blog.category === 'Technology' ? 'checked' : '' %>>
+                                            <label for="tech">Technology</label>
+
+                                            <input type="radio" id="edu" name="category" value="education"
+                                                <%= blog.category === 'education' ? 'checked' : '' %>>
+                                            <label for="edu">Education</label>
+
+                                            <input type="radio" id="career" name="category" value="CareerGuidance"
+                                                <%= blog.category === 'CareerGuidance' ? 'checked' : '' %>>
+                                            <label for="career">Career</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mt-4">
+                                        <label class="form-label">Blog Cover Image</label>
+                                        <span class="preview-label">Current</span>
+                                        <div class="current-image-preview mb-2">
+                                            <img src="<%= blog.blogimage %>" alt="Blog Image">
+                                        </div>
+
+                                        <input type="file" name="blogimage" class="form-control mt-2">
+                                        <small class="text-muted">Leave empty to keep current image</small>
+                                    </div>
+
+                                </div>
+
+                                <!-- RIGHT SIDE -->
+                                <div class="col-md-5 pl-4">
+
+                                    <h5 class="text-muted mb-4">Author Details</h5>
+
+                                    <div class="form-group mb-4">
+                                        <label class="form-label">Author Name</label>
+                                        <input type="text" name="authorname" class="form-control"
+                                               value="<%= blog.authorname %>">
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <label class="form-label">Publish Date</label>
+                                        <input type="date" name="publishDate" class="form-control"
+                                            value="<%= blog.publishDate ? blog.publishDate.toISOString().split('T')[0] : '' %>">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Author Image</label>
+                                        <span class="preview-label">Current</span>
+                                        <div class="current-image-preview mb-2" style="border-radius:50%;">
+                                            <img src="<%= blog.authorImage %>"
+                                                 style="width:60px;height:60px;border-radius:50%;">
+                                        </div>
+
+                                        <input type="file" name="authorImage" class="form-control">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-center bg-white">
+                            <button type="submit" class="btn btn-update">
+                                <i class="mdi mdi-content-save"></i> Save Changes
+                            </button>
+                            <a href="/" class="btn btn-outline-secondary ml-2">Cancel</a>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>
