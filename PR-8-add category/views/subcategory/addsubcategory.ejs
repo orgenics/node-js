@@ -1,0 +1,131 @@
+<%- include('../header')%>
+
+<div class="page-wrapper" style="background: #fdfdfd; min-height: 100vh;">
+    <div class="page-breadcrumb bg-white shadow-sm mb-4" style="padding: 20px 35px;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="page-title mb-1 fw-bold text-dark">Nested Categories</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/category/view-categories">Catalog</a></li>
+                        <li class="breadcrumb-item active text-primary fw-bold">Add Sub Category</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+                    <div class="card-header bg-primary py-4 text-center border-0">
+                        <div class="icon-box mb-2" style="font-size: 35px; color: rgba(255,255,255,0.9);">
+                            <i class="mdi mdi-vector-arrange-below"></i>
+                        </div>
+                        <h4 class="text-white fw-bold mb-0">Create Sub Category</h4>
+                        <p class="text-white-50 small mb-0">Organize your inventory with nested labels</p>
+                    </div>
+
+                    <form action="/subcategory/add-subcategory" method="post">
+                        <div class="card-body p-5">
+                            
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-muted text-uppercase mb-2 d-block">1. Select Parent Category</label>
+                                <div class="select-wrapper">
+                                    <select name="categoryId" class="form-control modern-select" required>
+                                        <option value="" disabled selected>-- Choose a main category --</option>
+                                        <% category.forEach((cat)=>{ %>
+                                            <option value="<%= cat.id %>">
+                                                <%= cat.categoryName %>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                    <i class="mdi mdi-chevron-down select-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <label class="small fw-bold text-muted text-uppercase mb-2 d-block">2. Sub Category Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light border-right-0" style="border-radius: 12px 0 0 12px;">
+                                            <i class="mdi mdi-tag-outline text-primary"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control modern-input border-left-0" 
+                                           placeholder="e.g. Wireless Headphones, Summer Wear" 
+                                           name="subCategoryName" required>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer bg-light p-4 d-flex justify-content-center border-0">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" style="border-radius: 12px; font-weight: 700;">
+                                <i class="mdi mdi-check-circle mr-2"></i> Save Sub Category
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="/subcategory/view-subcategory" class="text-muted small">
+                        <i class="mdi mdi-arrow-left"></i> View All Sub Categories
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Modern Styling Overrides */
+    .modern-select, .modern-input {
+        height: 55px !important;
+        border: 2px solid #edf2f7 !important;
+        border-radius: 12px !important;
+        padding-left: 20px !important;
+        background-color: #f8fafc;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #334155;
+    }
+
+    .modern-select:focus, .modern-input:focus {
+        border-color: #4e73df !important;
+        background-color: #fff;
+        box-shadow: 0 5px 15px rgba(78, 115, 223, 0.1) !important;
+    }
+
+    .select-wrapper {
+        position: relative;
+    }
+
+    .select-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #4e73df;
+        font-size: 20px;
+    }
+
+    /* Remove default select arrow */
+    .modern-select {
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
+<%- include('../footer')%>

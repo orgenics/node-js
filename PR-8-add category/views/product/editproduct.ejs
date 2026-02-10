@@ -1,0 +1,206 @@
+<%- include('../header')%>
+
+<div class="page-wrapper" style="background: #f8fafc; min-height: 100vh; padding-bottom: 40px;">
+    <div class="page-breadcrumb bg-white shadow-sm mb-4" style="padding: 20px 35px;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="page-title mb-1 fw-bold text-dark">Product Management</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/product/view-product">Products</a></li>
+                        <li class="breadcrumb-item active text-primary fw-bold">Update Item</li>
+                    </ol>
+                </nav>
+            </div>
+            <a href="/product/view-product" class="btn btn-outline-secondary btn-sm px-3 rounded-pill">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Catalog
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <form action="/product/update-product/<%= product.id %>" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
+                        <div class="card-body text-center p-4">
+                            <label class="small fw-bold text-muted text-uppercase mb-3 d-block">Main Product Image</label>
+                            
+                            <div class="image-preview-box mb-3 position-relative">
+                                <img src="<%= product.productImage %>" id="img-preview" 
+                                     class="img-fluid rounded shadow-sm border" 
+                                     style="max-height: 250px; width: 100%; object-fit: cover;">
+                                <div class="badge-status bg-success">Live</div>
+                            </div>
+
+                            <div class="custom-file-upload mt-3">
+                                <input type="file" name="productImage" id="file-input" onchange="previewUpdate(this)" hidden>
+                                <label for="file-input" class="btn btn-light btn-block border text-muted">
+                                    <i class="fas fa-sync-alt mr-2"></i>Replace Image
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-dark mb-3">Product Summary</h6>
+                            <div class="small d-flex justify-content-between mb-2">
+                                <span class="text-muted">Database ID</span>
+                                <span class="fw-bold">#<%= product.id.toString().slice(-6).toUpperCase() %></span>
+                            </div>
+                            <div class="small d-flex justify-content-between">
+                                <span class="text-muted">Last Modified</span>
+                                <span class="fw-bold">Just Now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-dark mb-4 border-bottom pb-3">Product Specifications</h5>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <label class="small fw-bold text-muted text-uppercase">1. Category</label>
+                                    <select name="categoryId" id="categoryId" class="form-control modern-field">
+                                        <option value="">Select Category</option>
+                                        <% category.forEach((cat)=>{ %>
+                                            <option value="<%= cat.id %>" <%= product.categoryId.toString() === cat._id.toString() ? 'selected' : '' %>>
+                                                <%= cat.categoryName %>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small fw-bold text-muted text-uppercase">2. Sub Category</label>
+                                    <select name="subcategoryId" id="subcategoryId" class="form-control modern-field">
+                                        <option value="">Loading...</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small fw-bold text-muted text-uppercase">3. Extra Sub</label>
+                                    <select name="extrasubcategoryId" id="extrasubcategoryId" class="form-control modern-field">
+                                        <option value="">Loading...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-8">
+                                    <label class="small fw-bold text-muted text-uppercase">Product Name</label>
+                                    <input type="text" class="form-control modern-field" name="productName" value="<%= product.productName %>">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small fw-bold text-muted text-uppercase">Brand</label>
+                                    <input type="text" class="form-control modern-field" name="ProductBrand" value="<%= product.ProductBrand %>">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-muted text-uppercase">Description</label>
+                                <textarea name="productDes" class="form-control modern-field" rows="4"><%= product.productDes %></textarea>
+                            </div>
+
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <label class="small fw-bold text-primary text-uppercase">Price Setting</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-white border-right-0"><i class="fas fa-tag text-muted"></i></span>
+                                        </div>
+                                        <input type="number" class="form-control modern-field border-left-0" name="productPrice" value="<%= product.productPrice %>">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 text-right pt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" style="border-radius: 12px; font-weight: 700;">
+                                        Apply Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .modern-field {
+        border: 2px solid #edf2f7;
+        border-radius: 10px;
+        padding: 10px 15px;
+        background: #fcfdfe;
+        transition: 0.3s;
+        font-weight: 500;
+    }
+    .modern-field:focus {
+        border-color: #4e73df;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(78, 115, 223, 0.08);
+    }
+    .badge-status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        color: white;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+</style>
+
+<script>
+    const categoryId = document.getElementById('categoryId');
+    const subcategoryId = document.getElementById('subcategoryId');
+    const extrasubcategoryId = document.getElementById('extrasubcategoryId');
+
+    let savedSubId = "<%= product.subcategoryId %>";
+    let savedExtraId = "<%= product.extrasubcategoryId %>";
+
+    async function loadSubCategories(catId, selectedId = null) {
+        const response = await fetch(`/extrasubcategory/subcategory/${catId}`);
+        const data = await response.json();
+        subcategoryId.innerHTML = `<option value="">Select Sub Category</option>`;
+        data.data.forEach(item => {
+            let opt = new Option(item.subCategoryName, item._id);
+            if (item._id == selectedId) opt.selected = true;
+            subcategoryId.add(opt);
+        });
+        if (selectedId) loadExtraSubCategories(selectedId, savedExtraId);
+    }
+
+    async function loadExtraSubCategories(subCatId, selectedId = null) {
+        const response = await fetch(`/product/extrasubcategory/${subCatId}`);
+        const data = await response.json();
+        extrasubcategoryId.innerHTML = `<option value="">Select Extra Sub Category</option>`;
+        data.data.forEach(item => {
+            let opt = new Option(item.extrasubCategoryName, item._id);
+            if (item._id == selectedId) opt.selected = true;
+            extrasubcategoryId.add(opt);
+        });
+    }
+
+    // Initialize
+    window.onload = () => loadSubCategories(categoryId.value, savedSubId);
+
+    categoryId.addEventListener('change', () => loadSubCategories(categoryId.value));
+    subcategoryId.addEventListener('change', () => loadExtraSubCategories(subcategoryId.value));
+
+    function previewUpdate(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = e => document.getElementById('img-preview').src = e.target.result;
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<%- include('../footer')%>

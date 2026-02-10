@@ -1,0 +1,193 @@
+<%- include('../header')%>
+
+<div class="page-wrapper" style="background: #f4f7f9; min-height: 100vh; padding-bottom: 50px;">
+    <div class="page-breadcrumb bg-white shadow-sm mb-4" style="padding: 20px 35px;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="page-title mb-1 fw-bold text-dark">Add New Product</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active text-primary fw-bold">Product Catalog</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <form action="/product/add-product" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                        <div class="card-header bg-primary text-white py-3" style="border-radius: 15px 15px 0 0;">
+                            <h5 class="mb-0"><i class="mdi mdi-buffer mr-2"></i>Classification</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-muted text-uppercase">Main Category</label>
+                                <select name="categoryId" id="categoryId" class="form-control custom-select-modern" required>
+                                    <option value="">-- Select Category --</option>
+                                    <% category.forEach((cat)=>{ %>
+                                        <option value="<%= cat.id %>"><%= cat.categoryName %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-muted text-uppercase">Sub Category</label>
+                                <select name="subcategoryId" id="subcategoryId" class="form-control custom-select-modern" required disabled>
+                                    <option value="">-- Select Sub --</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <label class="small fw-bold text-muted text-uppercase">Extra Sub Category</label>
+                                <select name="extrasubcategoryId" id="extrasubcategoryId" class="form-control custom-select-modern" required disabled>
+                                    <option value="">-- Select Extra Sub --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm mt-4" style="border-radius: 15px;">
+                        <div class="card-body text-center p-4">
+                            <label class="small fw-bold text-muted text-uppercase d-block mb-3">Product Media</label>
+                            <div class="upload-zone" onclick="document.getElementById('productImage').click()">
+                                <img id="imgPreview" src="#" alt="Preview" style="display: none; width: 100%; border-radius: 10px; margin-bottom: 10px;">
+                                <div id="upload-placeholder">
+                                    <i class="mdi mdi-cloud-upload text-primary" style="font-size: 40px;"></i>
+                                    <p class="mb-0 text-muted">Upload Photo</p>
+                                </div>
+                                <input type="file" name="productImage" id="productImage" hidden onchange="previewImg(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4 text-dark border-bottom pb-2">Product Specifications</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-8 mb-4">
+                                    <label class="small fw-bold text-muted text-uppercase">Product Title</label>
+                                    <input type="text" class="form-control modern-input" name="productName" placeholder="Enter product name..." required>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <label class="small fw-bold text-muted text-uppercase">Brand</label>
+                                    <input type="text" class="form-control modern-input" name="ProductBrand" placeholder="e.g. Nike, Apple..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-muted text-uppercase">Short Description</label>
+                                <textarea class="form-control modern-input" name="productDes" rows="4" placeholder="Describe the product features..."></textarea>
+                            </div>
+
+                            <div class="row align-items-end">
+                                <div class="col-md-4">
+                                    <label class="small fw-bold text-primary text-uppercase">Retail Price ($)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light border-0"><i class="mdi mdi-currency-usd"></i></span>
+                                        </div>
+                                        <input type="number" class="form-control modern-input" name="productPrice" placeholder="0.00" step="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 text-right">
+                                    <button type="reset" class="btn btn-light px-4 mr-2">Reset</button>
+                                    <button type="submit" class="btn btn-primary px-5 shadow-sm" style="border-radius: 10px; font-weight: 600;">
+                                        Publish Product
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .custom-select-modern, .modern-input {
+        border: 1px solid #e0e6ed;
+        border-radius: 10px;
+        padding: 10px 15px;
+        background: #fcfdfe;
+        transition: 0.3s;
+    }
+    .custom-select-modern:focus, .modern-input:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 10px rgba(78, 115, 223, 0.1);
+        background: #fff;
+    }
+    .upload-zone {
+        border: 2px dashed #cbd5e0;
+        border-radius: 12px;
+        padding: 20px;
+        cursor: pointer;
+        background: #f8fafc;
+        transition: 0.3s;
+    }
+    .upload-zone:hover {
+        background: #ebf4ff;
+        border-color: #4e73df;
+    }
+</style>
+
+<script>
+    const categoryId = document.getElementById('categoryId');
+    const subcategoryId = document.getElementById('subcategoryId');
+    const extrasubcategoryId = document.getElementById('extrasubcategoryId');
+
+    // Category to Sub Category
+    categoryId.addEventListener('change', async () => {
+        let id = categoryId.value;
+        subcategoryId.disabled = !id;
+        extrasubcategoryId.disabled = true;
+        subcategoryId.innerHTML = '<option value="">Loading...</option>';
+
+        const response = await fetch(`/extrasubcategory/subcategory/${id}`);
+        const data = await response.json();
+        
+        subcategoryId.innerHTML = '<option value="">-- Select Sub --</option>';
+        data.data.forEach(item => {
+            let opt = new Option(item.subCategoryName, item._id);
+            subcategoryId.add(opt);
+        });
+    });
+
+    // Sub Category to Extra Sub Category
+    subcategoryId.addEventListener('change', async () => {
+        let id = subcategoryId.value;
+        extrasubcategoryId.disabled = !id;
+        extrasubcategoryId.innerHTML = '<option value="">Loading...</option>';
+
+        const response = await fetch(`/product/extrasubcategory/${id}`);
+        const data = await response.json();
+        
+        extrasubcategoryId.innerHTML = '<option value="">-- Select Extra Sub --</option>';
+        data.data.forEach(item => {
+            let opt = new Option(item.extrasubCategoryName, item._id);
+            extrasubcategoryId.add(opt);
+        });
+    });
+
+    // Image Preview
+    function previewImg(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imgPreview').src = e.target.result;
+                document.getElementById('imgPreview').style.display = 'block';
+                document.getElementById('upload-placeholder').style.display = 'none';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<%- include('../footer')%>

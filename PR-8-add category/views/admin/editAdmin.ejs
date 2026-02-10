@@ -1,0 +1,188 @@
+<%- include('../header') %>
+
+<div class="page-wrapper" style="background: #f8f9fa; min-height: 100vh;">
+    <div class="page-breadcrumb bg-white shadow-sm mb-4" style="padding: 20px 35px;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="page-title mb-1 fw-bold text-dark">Edit Administrator</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/view-admins">Admins</a></li>
+                        <li class="breadcrumb-item active">Update Profile</li>
+                    </ol>
+                </nav>
+            </div>
+            <a href="/admin/view-admins" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <form action="/admin/update-admin/<%= admin.id %>" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm text-center p-4" style="border-radius: 15px;">
+                        <div class="position-relative d-inline-block mx-auto mb-3">
+                            <img src="<%= admin.profileImage %>" id="preview-img" class="rounded-circle shadow" 
+                                 style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #fff;">
+                            <div class="status-indicator bg-success"></div>
+                        </div>
+                        <h5 class="fw-bold mb-1"><%= admin.firstname %> <%= admin.lastname %></h5>
+                        <p class="text-muted small mb-3"><%= admin.email %></p>
+                        
+                        <div class="upload-btn-wrapper mt-2">
+                            <button class="btn btn-light border btn-sm w-100">Change Photo</button>
+                            <input type="file" name="profileImage" onchange="previewFile()" id="file-input">
+                        </div>
+                        <small class="text-muted d-block mt-2">Accepted: JPG, PNG (Max 2MB)</small>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                        <div class="card-header bg-white border-0 pt-4 px-4">
+                            <h5 class="mb-0 fw-bold">Personal Information</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">FIRST NAME</label>
+                                    <input type="text" class="form-control custom-field" name="firstname" value="<%= admin.firstname %>">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">LAST NAME</label>
+                                    <input type="text" class="form-control custom-field" name="lastname" value="<%= admin.lastname %>">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">EMAIL ADDRESS</label>
+                                    <input type="email" class="form-control custom-field" name="email" value="<%= admin.email %>">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">PHONE NUMBER</label>
+                                    <input type="text" class="form-control custom-field" name="mobileno" value="<%= admin.mobileno %>">
+                                </div>
+                            </div>
+
+                            <hr class="my-4 opacity-5">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold d-block">GENDER</label>
+                                    <div class="custom-radio-group">
+                                        <input type="radio" name="gender" value="Male" id="m" <%=admin.gender==='Male' ? 'checked' : '' %>>
+                                        <label for="m" class="radio-btn">Male</label>
+                                        
+                                        <input type="radio" name="gender" value="Female" id="f" <%=admin.gender==='Female' ? 'checked' : '' %>>
+                                        <label for="f" class="radio-btn">Female</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold d-block">HOBBIES</label>
+                                    <div class="d-flex flex-wrap gap-2 mt-2">
+                                        <div class="custom-check-box">
+                                            <input type="checkbox" name="hobbies[]" value="reading" id="h1" <%=admin.hobbies.includes('reading') ? 'checked' : '' %>>
+                                            <label for="h1">Reading</label>
+                                        </div>
+                                        <div class="custom-check-box">
+                                            <input type="checkbox" name="hobbies[]" value="music" id="h2" <%=admin.hobbies.includes('music') ? 'checked' : '' %>>
+                                            <label for="h2">Music</label>
+                                        </div>
+                                        <div class="custom-check-box">
+                                            <input type="checkbox" name="hobbies[]" value="Adventure" id="h3" <%=admin.hobbies.includes('Adventure') ? 'checked' : '' %>>
+                                            <label for="h3">Adventure</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm fw-bold" style="border-radius: 8px;">
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .custom-field {
+        background: #fcfcfc;
+        border: 1px solid #eef0f2;
+        padding: 12px;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+    .custom-field:focus {
+        background: #fff;
+        border-color: #3e5569;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    /* Profile Image Style */
+    .status-indicator {
+        position: absolute;
+        bottom: 10px;
+        right: 15px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 3px solid white;
+    }
+    /* Custom Radio Buttons */
+    .custom-radio-group input { display: none; }
+    .radio-btn {
+        padding: 8px 20px;
+        border: 1px solid #eef0f2;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-right: 5px;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+    .custom-radio-group input:checked + label {
+        background: #3e5569;
+        color: white;
+        border-color: #3e5569;
+    }
+    /* Custom Checkboxes */
+    .custom-check-box input { display: none; }
+    .custom-check-box label {
+        padding: 5px 15px;
+        background: #f1f3f5;
+        border-radius: 20px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .custom-check-box input:checked + label {
+        background: #e7f0ff;
+        color: #007bff;
+        font-weight: bold;
+    }
+    /* Upload Button Styling */
+    .upload-btn-wrapper { position: relative; overflow: hidden; display: inline-block; cursor: pointer; }
+    .upload-btn-wrapper input[type=file] {
+        position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer;
+    }
+</style>
+
+<script>
+    function previewFile() {
+        const preview = document.querySelector('#preview-img');
+        const file = document.querySelector('#file-input').files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+        }, false);
+        if (file) { reader.readAsDataURL(file); }
+    }
+</script>
+
+<%- include('../footer') %>

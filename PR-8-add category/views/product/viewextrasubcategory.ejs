@@ -1,0 +1,160 @@
+<%- include('../header')%>
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --glass-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    .page-wrapper { background: #f4f7f6; min-height: 100vh; }
+    
+    .custom-card {
+        border: none;
+        border-radius: 15px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background: var(--glass-bg);
+    }
+
+    .custom-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+    }
+
+    .category-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .category-icon-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .action-pill {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        border-radius: 50%;
+        display: inline-block;
+        background: #f8f9fa;
+        color: #6c757d;
+        transition: all 0.3s;
+    }
+
+    .action-pill:hover {
+        background: #764ba2;
+        color: #fff;
+    }
+
+    .breadcrumb-modern {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .table-modern thead th {
+        background-color: transparent;
+        border: none;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        color: #a0aec0;
+        padding: 20px;
+    }
+
+    .table-modern tbody tr {
+        background: #fff;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    
+    .status-dot {
+        height: 8px;
+        width: 8px;
+        background-color: #2ecc71;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container-fluid pt-4">
+        <div class="d-md-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h3 class="font-weight-bold text-dark mb-1">Library Architecture</h3>
+                <p class="text-muted small"><span class="status-dot"></span> System Live: Managing <%= extrasubcategory.length %> Categories</p>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-white shadow-sm mr-2 rounded-pill px-3">
+                    <i class="fas fa-download mr-1"></i> Export
+                </button>
+                <a href="/extrasubcategory/add-extrasubcategory" class="btn btn-primary shadow rounded-pill px-4" style="background: var(--primary-gradient); border: none;">
+                    <i class="fas fa-plus-circle mr-1"></i> New Entry
+                </a>
+            </div>
+        </div>
+
+        <div class="card custom-card shadow-sm">
+            <div class="table-responsive p-3">
+                <table class="table table-modern align-middle border-0">
+                    <thead>
+                        <tr>
+                            <th>Primary Category</th>
+                            <th>Breadcrumb Path</th>
+                            <th>Extra Sub-Category</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% extrasubcategory.forEach((item, i) => { %>
+                        <tr>
+                            <td class="border-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="category-icon-wrapper mr-3">
+                                        <img src="<%= item.categoryId.categoryImage %>" alt="cat">
+                                    </div>
+                                    <div>
+                                        <div class="font-weight-bold text-dark mb-0"><%= item.categoryId.categoryName %></div>
+                                        <small class="text-muted">ID: #<%= item.id.toString().slice(-5) %></small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="border-0">
+                                <span class="text-muted"><%= item.categoryId.categoryName %></span>
+                                <i class="fas fa-chevron-right mx-2 fa-xs text-light"></i>
+                                <span class="text-dark font-weight-medium"><%= item.subcategoryId.subCategoryName %></span>
+                            </td>
+                            <td class="border-0">
+                                <div class="badge badge-light p-2 px-3 border text-primary" style="border-radius: 8px;">
+                                    <%= item.extrasubCategoryName %>
+                                </div>
+                            </td>
+                            <td class="border-0 text-right">
+                                <a href="/extrasubcategory/edit-extrasubcategory/<%= item.id %>" class="action-pill shadow-sm mr-1">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="/extrasubcategory/delete-extrasubcategory/<%= item.id %>" class="action-pill shadow-sm text-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer')%>

@@ -1,0 +1,158 @@
+<%- include('../header') %>
+
+<div class="page-wrapper" style="background: #f4f7f9; min-height: 100vh;">
+    <div class="page-breadcrumb bg-white shadow-sm mb-4" style="padding: 25px 35px;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="page-title mb-1 fw-bold text-dark">Administrator Directory</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="/admin/dashboard" class="text-muted">Home</a></li>
+                        <li class="breadcrumb-item active text-primary fw-bold" aria-current="page">Admins</li>
+                    </ol>
+                </nav>
+            </div>
+            <a href="/admin/add-admin" class="btn btn-primary shadow-sm" style="border-radius: 8px;">
+                <i class="fas fa-plus mr-2"></i> Add New Admin
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden;">
+                    <div class="card-header bg-white py-3 px-4 border-bottom-0">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="card-title mb-0 fw-bold">Active Administrators</h5>
+                            <div class="search-box">
+                                <input type="text" class="form-control form-control-sm" placeholder="Search admins..." id="tableSearch">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr class="text-uppercase text-muted" style="font-size: 12px; letter-spacing: 1px;">
+                                    <th class="pl-4 py-3">#</th>
+                                    <th class="py-3">Profile</th>
+                                    <th class="py-3">Full Name</th>
+                                    <th class="py-3">Contact Info</th>
+                                    <th class="py-3">Gender</th>
+                                    <th class="py-3">Interests</th>
+                                    <th class="py-3 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% admin.forEach((val, i) => { %>
+                                    <tr class="admin-row">
+                                        <td class="pl-4 text-muted"><%= i + 1 %></td>
+                                        <td>
+                                            <div class="avatar-container">
+                                                <img src="<%= val.profileImage %>" class="rounded-circle shadow-sm border" width="45" height="45" alt="Avatar" style="object-fit: cover;">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-bold text-dark"><%= val.firstname %> <%= val.lastname %></div>
+                                            <small class="text-muted">Admin ID: #<%= val.id.toString().slice(-5) %></small>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <span class="text-dark"><i class="ti-email mr-2 text-primary small"></i><%= val.email %></span>
+                                                <span class="text-muted small"><i class="ti-mobile mr-2 text-success small"></i><%= val.mobileno %></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <% if(val.gender === 'Male') { %>
+                                                <span class="badge badge-pill badge-light-primary text-primary px-3">Male</span>
+                                            <% } else { %>
+                                                <span class="badge badge-pill badge-light-danger text-danger px-3">Female</span>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <% val.hobbies.toString().split(',').forEach(hobby => { %>
+                                                    <span class="hobby-tag"><%= hobby.trim() %></span>
+                                                <% }) %>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="action-btn-group">
+                                                <a href="/admin/edit-admin/<%= val.id %>" class="btn btn-sm btn-outline-success mx-1" title="Edit Profile">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                                <a href="/admin/delete-admin/<%= val.id %>" class="btn btn-sm btn-outline-danger mx-1" title="Delete Admin" onclick="return confirm('Are you sure?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Row Styling */
+    .admin-row {
+        transition: all 0.2s ease;
+    }
+    .admin-row:hover {
+        background-color: #f8fbff !important;
+        transform: scale(1.002);
+    }
+
+    /* Badge & Tag Styling */
+    .badge-light-primary { background: #eef2ff; color: #4e73df; }
+    .badge-light-danger { background: #fff1f0; color: #e74a3b; }
+    
+    .hobby-tag {
+        background: #f1f3f5;
+        color: #5a5c69;
+        font-size: 11px;
+        padding: 2px 10px;
+        border-radius: 20px;
+        margin: 2px;
+        border: 1px solid #e3e6f0;
+        display: inline-block;
+    }
+
+    /* Table Enhancements */
+    .table thead th {
+        border-top: none;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    .table td {
+        vertical-align: middle;
+        border-top: 1px solid #f0f0f0;
+        padding: 15px 10px;
+    }
+
+    /* Action Buttons */
+    .action-btn-group .btn {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        line-height: 32px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+    
+    .search-box input {
+        border-radius: 20px;
+        padding-left: 15px;
+        background: #f8f9fa;
+        border: 1px solid #e3e6f0;
+    }
+
+    /* Gap utility if not in your bootstrap version */
+    .gap-1 { gap: 4px; }
+</style>
+
+<%- include('../footer') %>

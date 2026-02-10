@@ -1,0 +1,154 @@
+<%- include('../header')%>
+
+<div class="page-wrapper" style="background: #f4f7f9; min-height: 100vh; padding-bottom: 50px;">
+    <div class="page-breadcrumb bg-white shadow-sm mb-4" style="padding: 20px 35px;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h4 class="page-title mb-1 fw-bold text-dark">Modify Hierarchy</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/extrasubcategory/view-extrasubcategory">Extra Sub Categories</a></li>
+                        <li class="breadcrumb-item active text-primary">Edit Item</li>
+                    </ol>
+                </nav>
+            </div>
+            <a href="/extrasubcategory/view-extrasubcategory" class="btn btn-light border btn-sm rounded-pill px-3">
+                <i class="fas fa-arrow-left mr-1"></i> Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+                    <div class="d-flex text-center bg-light border-bottom" style="font-size: 12px; font-weight: 700;">
+                        <div class="flex-fill py-3 text-muted border-right">LEVEL 1: CATEGORY</div>
+                        <div class="flex-fill py-3 text-muted border-right">LEVEL 2: SUB</div>
+                        <div class="flex-fill py-3 text-primary" style="background: #fff;">LEVEL 3: EXTRA SUB</div>
+                    </div>
+
+                    <form action="/extrasubcategory/update-extrasubcategory/<%= extrasubcategory.id %>" method="post">
+                        <div class="card-body p-5">
+                            <h5 class="fw-bold mb-4 text-dark"><i class="fas fa-edit text-primary mr-2"></i>Edit Extra Sub-Category Details</h5>
+                            
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-uppercase text-muted mb-2 d-block">Main Parent Category</label>
+                                <select name="categoryId" class="form-control modern-select" id="categoryId">
+                                    <option value="">-- Select Category --</option>
+                                    <% category.forEach((cat)=>{ %>
+                                        <option value="<%= cat.id %>" <%= cat.id == extrasubcategory.categoryId ? 'selected' : '' %>>
+                                            <%= cat.categoryName %>
+                                        </option>
+                                    <% }) %>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-uppercase text-muted mb-2 d-block">Sub-Parent Category</label>
+                                <div id="subcat-loader" class="spinner-border spinner-border-sm text-primary position-absolute" style="right: 50px; margin-top: 15px; display: none;"></div>
+                                <select name="subcategoryId" class="form-control modern-select" id="subcategoryId">
+                                    <option value="">-- Select Sub Category --</option>
+                                </select>
+                            </div>
+
+                            <hr class="my-4 opacity-5">
+
+                            <div class="form-group mb-4">
+                                <label class="small fw-bold text-uppercase text-primary mb-2 d-block">Extra Sub-Category Name</label>
+                                <input type="text" class="form-control modern-input shadow-sm" id="extrasubCategoryName"
+                                       name="extrasubCategoryName" placeholder="Update Name..." 
+                                       value="<%= extrasubcategory.extrasubCategoryName %>" required>
+                                <small class="text-muted mt-2 d-block">Refining this name will update it across all linked products.</small>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-white border-0 p-4 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 shadow" style="border-radius: 12px; font-weight: 700;">
+                                <i class="fas fa-save mr-2"></i> Update Hierarchy
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Input Styling */
+    .modern-select, .modern-input {
+        height: 52px !important;
+        border: 2px solid #eef1f4 !important;
+        border-radius: 12px !important;
+        background-color: #f8fafc !important;
+        transition: all 0.3s ease;
+        color: #334155;
+    }
+    .modern-select:focus, .modern-input:focus {
+        border-color: #4e73df !important;
+        background-color: #fff !important;
+        box-shadow: 0 4px 15px rgba(78, 115, 223, 0.1) !important;
+    }
+
+    /* Hierarchy Labels */
+    .border-right { border-right: 1px solid #eef1f4; }
+    
+    /* Animation */
+    .card { animation: fadeInUp 0.4s ease-out; }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<script>
+    const categoryId = document.getElementById('categoryId');
+    const subcategoryId = document.getElementById('subcategoryId');
+    const loader = document.getElementById('subcat-loader');
+    const selectedSubCategory = "<%= extrasubcategory.subcategoryId %>";
+
+    async function loadSubCategories(catId, selectedId = null) {
+        if (!catId) return;
+        
+        loader.style.display = 'block';
+        subcategoryId.disabled = true;
+        subcategoryId.innerHTML = `<option value="">Loading sub-categories...</option>`;
+
+        try {
+            const res = await fetch(`/extrasubcategory/subcategory/${catId}`);
+            const data = await res.json();
+            
+            subcategoryId.innerHTML = `<option value="">-- Select Sub Category --</option>`;
+            
+            data.data.forEach(subcat => {
+                const option = document.createElement('option');
+                option.value = subcat._id;
+                option.textContent = subcat.subCategoryName;
+                if (subcat._id == selectedId) option.selected = true;
+                subcategoryId.appendChild(option);
+            });
+        } catch (err) {
+            console.error("Error fetching subcategories:", err);
+            subcategoryId.innerHTML = `<option value="">Error loading data</option>`;
+        } finally {
+            loader.style.display = 'none';
+            subcategoryId.disabled = false;
+        }
+    }
+
+    // Page Load Logic
+    window.addEventListener('DOMContentLoaded', () => {
+        if (categoryId.value) {
+            loadSubCategories(categoryId.value, selectedSubCategory);
+        }
+    });
+
+    // On Category Change
+    categoryId.addEventListener('change', () => {
+        loadSubCategories(categoryId.value);
+    });
+</script>
+
+<%- include('../footer')%>

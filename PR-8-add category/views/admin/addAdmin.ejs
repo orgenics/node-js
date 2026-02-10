@@ -1,0 +1,150 @@
+<%- include('../header')%>
+
+<div class="page-wrapper" style="background: #f4f7f9; min-height: 100vh; padding-bottom: 50px;">
+    <div class="page-breadcrumb" style="padding: 25px 35px 0 35px;">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h3 class="page-title text-dark fw-bold">User Management</h3>
+                <p class="text-muted">Create a new administrator account</p>
+            </div>
+            <div class="col-md-6 text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent p-0 justify-content-end">
+                        <li class="breadcrumb-item"><a href="#" class="text-primary">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Add Admin</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden;">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                        <h4 class="card-title mb-0" style="color: #3e5569; font-weight: 700;">Admin Details</h4>
+                        <small class="text-muted">Please fill in all required information.</small>
+                    </div>
+
+                    <form action="/admin/add-admin" method="post" enctype="multipart/form-data">
+                        <div class="card-body px-4 py-4">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label font-weight-bold">First Name</label>
+                                    <input type="text" class="form-control custom-input" name="firstname" placeholder="Enter first name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label font-weight-bold">Last Name</label>
+                                    <input type="text" class="form-control custom-input" name="lastname" placeholder="Enter last name" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label font-weight-bold">Email Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-white"><i class="ti-email"></i></span>
+                                        </div>
+                                        <input type="email" class="form-control custom-input" name="email" placeholder="email@example.com" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label font-weight-bold">Password</label>
+                                    <input type="password" class="form-control custom-input" name="password" placeholder="••••••••" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label d-block font-weight-bold">Gender</label>
+                                    <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                                        <label class="btn btn-outline-primary flex-fill">
+                                            <input type="radio" name="gender" value="Male" id="option1"> Male
+                                        </label>
+                                        <label class="btn btn-outline-primary flex-fill">
+                                            <input type="radio" name="gender" value="Female" id="option2"> Female
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label font-weight-bold">Contact Number</label>
+                                    <input type="text" class="form-control custom-input" name="mobileno" placeholder="+1 234 567 890">
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label font-weight-bold d-block">Interests / Hobbies</label>
+                                <div class="d-flex flex-wrap gap-checkbox">
+                                    <div class="custom-control custom-checkbox mr-4">
+                                        <input type="checkbox" class="custom-control-input" name="hobbies[]" id="h1" value="reading">
+                                        <label class="custom-control-label" for="h1">Reading</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mr-4">
+                                        <input type="checkbox" class="custom-control-input" name="hobbies[]" id="h2" value="music">
+                                        <label class="custom-control-label" for="h2">Music</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="hobbies[]" id="h3" value="adventure">
+                                        <label class="custom-control-label" for="h3">Adventure</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label font-weight-bold">Profile Image</label>
+                                <div class="upload-box">
+                                    <input type="file" name="profileImage" id="profileImage" class="file-input" required>
+                                    <label for="profileImage" class="file-label">
+                                        <i class="ti-cloud-up"></i>
+                                        <span>Click to upload photo</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-light-gray p-4 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" style="border-radius: 10px; font-weight: 600;">
+                                Create Admin Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-input {
+        border: 1px solid #e0e6ed;
+        border-radius: 8px;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+    }
+    .custom-input:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.1);
+    }
+    .upload-box {
+        border: 2px dashed #d1d9e6;
+        border-radius: 10px;
+        text-align: center;
+        padding: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+        background: #fdfdfd;
+    }
+    .upload-box:hover {
+        background: #f0f4ff;
+        border-color: #4e73df;
+    }
+    .file-input { display: none; }
+    .file-label { cursor: pointer; color: #5a5c69; }
+    .file-label i { font-size: 24px; display: block; margin-bottom: 5px; color: #4e73df; }
+    .bg-light-gray { background-color: #f8f9fc; border-top: 1px solid #e3e6f0; }
+    .gap-checkbox { gap: 20px; }
+</style>
+
+<%- include('../footer')%>
